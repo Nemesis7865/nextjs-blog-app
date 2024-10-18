@@ -21,7 +21,7 @@ const BlogSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  author: {
+  authorImg: {
     type: String,
     required: true,
   },

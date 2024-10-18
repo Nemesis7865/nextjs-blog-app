@@ -9,9 +9,10 @@ const LoadDb = async () => {
 
 LoadDb();
 
-export const GET = (request) => {
+export const GET = async(request) => {
   try {
-    return NextResponse.json({ msg: "api is working" });
+    const blogs = await Blog.find({}) 
+    return NextResponse.json({ blogs});
   } catch (err) {
     return NextResponse.json({ err: "An error occured" });
   }
@@ -27,8 +28,20 @@ export const POST = async (request) => {
     const path = `./public/${timestamp}_${image.name}`;
     await writeFile(path, buffer);
     const imgUrl = `/${timestamp}_${image.name}`;
-    console.log(imgUrl);
-    return NextResponse.json({ imgUrl });
+
+    const blogData = {
+    title: `${formData.get('title')}`,
+    description: `${formData.get('description')}`,
+    category: `${formData.get('category')}`,
+    author: `${formData.get('author')}`,
+    image: `${imgUrl}`,
+    authorImg: `${formData.get('authorImg')}`
+    }
+    await Blog.create(blogData)
+    console.log('created')
+
+    return NextResponse.json({status: true, msg: 'success'}, 
+        {status: 200});
   } catch (err) {
     console.log(err);
     return NextResponse.json({ err: "An error occured" });
