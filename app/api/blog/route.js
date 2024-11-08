@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { ConnectDB } from "@/lb/config/config";
-import Blog from "@/lb/models/blogmodel";
+import Blog from "@/lb/models/BLogModel";
 import { writeFile } from "fs/promises";
+const fs = require("fs");
 
 
 
@@ -11,8 +12,9 @@ const LoadDb = async () => {
 
 LoadDb();
 
-export const GET = async(request) => {
+export const GET = async (request) => {
   try {
+<<<<<<< HEAD
     const blogId = request.nextUrl.searchParams.get('id');
     if (blogId) {
     const blogs = await Blog.findById(blogId);
@@ -22,6 +24,18 @@ export const GET = async(request) => {
   }}catch (err) {
     console.log(err);
     return NextResponse.json({ error: "An error occurred" });
+=======
+    const blogId = request.nextUrl.searchParams.get("id");
+    if (blogId) {
+      const blog = await Blog.findById(blogId);
+      return NextResponse.json(blog);
+    } else {
+      const blogs = await Blog.find({});
+      return NextResponse.json({ blogs });
+    }
+  } catch (err) {
+    return NextResponse.status(500).json({ err: "An error occurred" });
+>>>>>>> d63e39bc6ec3b149d89eac4c29d872fdf18d95df
   }
 };
 
@@ -38,21 +52,39 @@ export const POST = async (request) => {
     const imgUrl = `/${timestamp}_${image.name}`;
 
     const blogData = {
-    title: `${formData.get('title')}`,
-    description: `${formData.get('description')}`,
-    category: `${formData.get('category')}`,
-    author: `${formData.get('author')}`,
-    image: `${imgUrl}`,
-    authorImg: `${formData.get('authorImg')}`
-    }
-    await Blog.create(blogData)
-    console.log('created')
-
-    return NextResponse.json({status: true, msg: 'success'}, 
-        {status: 200});
+      title: `${formData.get("title")}`,
+      description: `${formData.get("description")}`,
+      category: `${formData.get("category")}`,
+      author: `${formData.get("author")}`,
+      image: `${imgUrl}`,
+      authorImg: `${formData.get("authorImg")}`,
+    };
+    await Blog.create(blogData);
+    console.log("created");
+    return NextResponse.json(
+      { success: true, msg: "success" },
+      { status: 200 }
+    );
   } catch (err) {
     console.log(err);
-    return NextResponse.json({ err: "An error occured" });
+    return NextResponse.json({ err: "An error occurred" });
+  }
+};
+
+export const DELETE = async (request) => {
+  try {
+    const id = await request.nextUrl.searchParams.get("id");
+    const blog = await Blog.findById(id);
+    fs.unlink(`./public${blog.image}`, () => {});
+    await Blog.findByIdAndDelete(id);
+    console.log("deleted");
+    return NextResponse.json(
+      { success: true, msg: "blog deleted succesfully" },
+      { status: 200 }
+    );
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json({ err: "An error occurred" });
   }
 };
 

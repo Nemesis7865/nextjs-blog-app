@@ -23,6 +23,7 @@ const page = () => {
   };
 
   const onSubmitHandler = async (e) => {
+<<<<<<< HEAD
     try {
       e.preventDefault();
       const formData = new FormData();
@@ -40,6 +41,21 @@ const page = () => {
       }
     } catch (err) {
       console.log(err);
+=======
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("title", data.title);
+    formData.append("description", data.description);
+    formData.append("category", data.category);
+    formData.append("author", data.author);
+    formData.append("authorImg", data.authorImg);         
+    formData.append("image", image);
+    const response = await axios.post("/api/blog", formData);
+    if (response.data.success) {
+      toast.success(response.data.msg);
+    } else {
+      toast.error("Error");
+>>>>>>> d63e39bc6ec3b149d89eac4c29d872fdf18d95df
     }
   };
 
@@ -104,4 +120,8 @@ const page = () => {
   );
 };
 
+<<<<<<< HEAD
 export default page;
+=======
+export default page;
+>>>>>>> d63e39bc6ec3b149d89eac4c29d872fdf18d95df

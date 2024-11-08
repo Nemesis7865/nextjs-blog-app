@@ -2,17 +2,37 @@
 import BlogTableItem from "@/components/AdminComponents/BlogTableItem";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+<<<<<<< HEAD
+=======
+import { toast } from "react-toastify";
+>>>>>>> d63e39bc6ec3b149d89eac4c29d872fdf18d95df
 
 const page = () => {
   const [blogs, setBlogs] = useState([]);
   const fetchBlogs = async () => {
     const response = await axios.get("/api/blog");
     setBlogs(response.data.blogs);
+<<<<<<< HEAD
 
     useEffect(() => {
       fetchBlogs();
     });
   }
+=======
+  };
+  const deleteBlog = async (mongoId) => {
+    const response = await axios.delete("/api/blog", {
+      params: {
+        id: mongoId,
+      },
+    });
+    toast.success(response.data.msg);
+    fetchBlogs();
+  };
+  useEffect(() => {
+    fetchBlogs();
+  });
+>>>>>>> d63e39bc6ec3b149d89eac4c29d872fdf18d95df
   return (
     <div className="flex-1 pt-5 px-5 sm:pt-12 sm:pl-16">
       <h1>All Blogs</h1>
@@ -35,11 +55,27 @@ const page = () => {
             </tr>
           </thead>
           <tbody>
+<<<<<<< HEAD
             {
               blogs.map((item, index) => 
               {return <BlogTableItem  key={index} mondoId={item._id} title={item.title} author={item.title} authorImg={item.authorImg}/>})
             }
             
+=======
+            {blogs.map((item, index) => {
+              return (
+                <BlogTableItem
+                  key={index}
+                  mongoId={item._id}
+                  title={item.title}
+                  author={item.author}
+                  authorImg={item.authorImg}
+                  date={item.date}
+                  deleteBlog={deleteBlog}
+                />
+              );
+            })}
+>>>>>>> d63e39bc6ec3b149d89eac4c29d872fdf18d95df
           </tbody>
         </table>
       </div>
@@ -47,4 +83,8 @@ const page = () => {
   );
 };
 
+<<<<<<< HEAD
 export default page;
+=======
+export default page;
+>>>>>>> d63e39bc6ec3b149d89eac4c29d872fdf18d95df

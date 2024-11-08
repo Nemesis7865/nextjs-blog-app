@@ -1,13 +1,20 @@
 import { blog_data } from "@/assets/assets";
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import BlogItem from "./BlogItem";
 import axios from "axios";
 import { toast } from "react-toastify";
 
+=======
+import React, { useState, useEffect } from "react";
+import BlogItem from "./BlogItem";
+import axios from "axios";
+>>>>>>> d63e39bc6ec3b149d89eac4c29d872fdf18d95df
 
 const BlogList = () => {
   const [menu, setMenu] = useState("All");
   const [blogs, setBlogs] = useState([]);
+<<<<<<< HEAD
   const deleteBlogs = async () => {
     const response = await axios.delete('/api/blog', {
       params:{
@@ -21,6 +28,13 @@ const BlogList = () => {
   const fetchBlogs = async () => {
     const response = await axios.get(`/api/blog`)
     setBlogs(response.data.blogs);
+=======
+
+  const fetchBlogs = async () => {
+    const response = await axios.get(`/api/blog`);
+    setBlogs(response.data.blogs);
+    console.log(response.data.blogs);
+>>>>>>> d63e39bc6ec3b149d89eac4c29d872fdf18d95df
   };
 
   useEffect(() => {
@@ -70,13 +84,13 @@ const BlogList = () => {
         </button>
       </div>
       <div className="flex flex-wrap justify-around gap-1 gap-y-10 mb-16 xl:mx-24">
-        {blog_data
+        {blogs
           .filter((item) => (menu === "All" ? true : item.category === menu))
           .map((item, index) => {
             return (
               <BlogItem
                 key={index}
-                id = {item.id}
+                id={item._id}
                 image={item.image}
                 title={item.title}
                 description={item.description}
