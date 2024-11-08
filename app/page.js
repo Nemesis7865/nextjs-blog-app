@@ -1,15 +1,13 @@
-'use client'
-// import Image from "next/image";
-import Header from "@/component/Header";
-import BlogList from "@/component/BlogList";
-import React from "react";
-import Footer from "@/component/Footer";
-
+"use client";
+import Header from "../components/Header";
+import BlogList from "@/components/BlogList";
+import Footer from "../components/Footer";
 export default function Home() {
   return (
     <>
-   <Header/>
-   <BlogList/>
-  <Footer/>
-   </>)
+      <Header />
+      <BlogList />
+      <Footer />
+    </>
+  );
 }
