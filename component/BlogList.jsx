@@ -1,9 +1,31 @@
 import { blog_data } from "@/assets/assets";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BlogItem from "./BlogItem";
+import axios from "axios";
+import { toast } from "react-toastify";
+
 
 const BlogList = () => {
   const [menu, setMenu] = useState("All");
+  const [blogs, setBlogs] = useState([]);
+  const deleteBlogs = async () => {
+    const response = await axios.delete('/api/blog', {
+      params:{
+        id: mongoId
+      },
+    });
+  }
+  toast.success(response.data.msg);
+  fetchBlogs();
+
+  const fetchBlogs = async () => {
+    const response = await axios.get(`/api/blog`)
+    setBlogs(response.data.blogs);
+  };
+
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
 
   return (
     <div>

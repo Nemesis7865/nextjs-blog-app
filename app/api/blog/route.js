@@ -3,6 +3,8 @@ import { ConnectDB } from "@/lb/config/config";
 import Blog from "@/lb/models/blogmodel";
 import { writeFile } from "fs/promises";
 
+
+
 const LoadDb = async () => {
   await ConnectDB();
 };
@@ -11,12 +13,18 @@ LoadDb();
 
 export const GET = async(request) => {
   try {
-    const blogs = await Blog.find({}) 
+    const blogId = request.nextUrl.searchParams.get('id');
+    if (blogId) {
+    const blogs = await Blog.findById(blogId);
     return NextResponse.json({ blogs});
-  } catch (err) {
-    return NextResponse.json({ err: "An error occured" });
+  } else {
+    // const blog =
+  }}catch (err) {
+    console.log(err);
+    return NextResponse.json({ error: "An error occurred" });
   }
 };
+
 
 export const POST = async (request) => {
   try {
@@ -47,3 +55,21 @@ export const POST = async (request) => {
     return NextResponse.json({ err: "An error occured" });
   }
 };
+
+// export const DELETE = async (request) => {
+//   try {
+//     const is = await request.nextUrl.searchParams.get("id");
+//     const blog = await Blog.findById(id);
+//     if (blogId) {
+//       await Blog.findByIdAndDelete(blogid);
+//       return NextResponse.json({ status: true, msg: 'Deleted' }, 
+//         { status: 200 });
+//     } else {
+//       return NextResponse.json({ status: false, msg: 'No id provided' }, 
+//         { status: 400 });
+//     }
+//   } catch (err) {
+//     console.log(err);
+//     return NextResponse.json({ err: "An error occured" });
+//   }
+// }
