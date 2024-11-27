@@ -1,6 +1,7 @@
 "use client";
 import { assets } from "@/assets/assets";
 import axios from "axios";
+// import { URL } from "next/dist/compiled/@edge-runtime/primitives/url";
 import Image from "next/image";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -29,7 +30,7 @@ const page = () => {
     formData.append("description", data.description);
     formData.append("category", data.category);
     formData.append("author", data.author);
-    formData.append("authorImg", data.authorImg);         
+    formData.append("authorImg", data.authorImg);
     formData.append("image", image);
     const response = await axios.post("/api/blog", formData);
     if (response.data.success) {

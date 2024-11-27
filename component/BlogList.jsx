@@ -5,14 +5,16 @@ import axios from "axios";
 
 const BlogList = () => {
   const [menu, setMenu] = useState("All");
-  const [blogs, setBlogs] = useState([]);
+  const [blogs, setBlogs] = useState([]); //new code 1
 
+  //new code 2
   const fetchBlogs = async () => {
     const response = await axios.get(`/api/blog`);
     setBlogs(response.data.blogs);
     console.log(response.data.blogs);
   };
 
+  //new code 3
   useEffect(() => {
     fetchBlogs();
   }, []);
